@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Rundenzeiten erfassen und auswerten</h1>
+<p class="lead">Jede Runde wird in drei Sektoren erfasst, gegen die Streckenreferenz
+plausibilisiert und je Session ausgewertet: Bestzeit, Sektorbestzeiten, theoretische
+Bestzeit und Konsistenz.</p>
+<a class="btn btn-primary" href="{{ url_for('register') }}">Konto erstellen</a>
+<a class="btn btn-outline-secondary" href="{{ url_for('login') }}">Anmelden</a>
+<a class="btn btn-outline-secondary" href="{{ url_for('tracks') }}">Strecken und Ranglisten</a>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ track.name }}</h1>
+<p class="text-muted">{{ track.country }} &middot; {{ track.length_m }} m &middot; Referenzrunde {{ track.reference_lap_ms | laptime }}</p>
+<h2>Rangliste</h2>
+{% if entries %}
+<table class="table table-sm">
+  <thead><tr><th class="text-end">Rang</th><th>Fahrer</th><th>Fahrzeug</th><th class="time">Bestzeit</th><th class="time">Rueckstand</th><th>Datum</th></tr></thead>
+  <tbody>
+  {% for e in entries %}
+    <tr><td class="text-end">{{ e.rank }}</td><td>{{ e.username }}</td><td>{{ e.car }}</td>
+      <td class="time {{ 'best' if e.rank == 1 }}">{{ e.total_ms | laptime }}</td>
+      <td class="time text-muted">{% if e.rank > 1 %}{{ e.gap_ms | gap }}{% else %}-{% endif %}</td>
+      <td>{{ e.date.strftime('%d.%m.%Y') }}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}<p class="text-muted">Noch keine gewertete Runde auf dieser Strecke.</p>{% endif %}
+<p class="small text-muted">Gewertet werden gueltige fliegende Runden; ein Eintrag je Benutzer.</p>
+{% endblock %}

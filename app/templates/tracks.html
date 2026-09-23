@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Strecken</h1>
+<table class="table table-hover">
+  <thead><tr><th>Strecke</th><th>Land</th><th class="text-end">Laenge</th><th class="time">Referenzrunde</th><th></th></tr></thead>
+  <tbody>
+  {% for t in tracks %}
+    <tr><td>{{ t.name }}</td><td>{{ t.country }}</td><td class="text-end">{{ t.length_m }} m</td>
+      <td class="time">{{ t.reference_lap_ms | laptime }}</td>
+      <td><a href="{{ url_for('track_detail', slug=t.slug) }}">Rangliste</a></td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

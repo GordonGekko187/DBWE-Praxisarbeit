@@ -1,0 +1,47 @@
+{# Basislayout aller Seiten (Bootstrap 5 ueber Bootstrap-Flask) #}
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if title %}{{ title }} - {% endif %}APEX Trackday Log</title>
+  {{ bootstrap.load_css() }}
+  <style>
+    .time { font-variant-numeric: tabular-nums; text-align: right; }
+    .best { color: #198754; font-weight: 600; }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
+  <div class="container">
+    <a class="navbar-brand" href="{{ url_for('index') }}">APEX Trackday Log</a>
+    <ul class="navbar-nav me-auto">
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('tracks') }}">Strecken</a></li>
+      {% if current_user.is_authenticated %}
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">Meine Sessions</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('session_new') }}">Neue Session</a></li>
+      {% endif %}
+    </ul>
+    <ul class="navbar-nav">
+      {% if current_user.is_anonymous %}
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Anmelden</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">Registrieren</a></li>
+      {% else %}
+      <li class="nav-item"><span class="navbar-text me-3">{{ current_user.username }}</span></li>
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Abmelden</a></li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>
+<main class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }}" role="alert">{{ message }}</div>
+    {% endfor %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+<footer class="container text-muted small mt-5 mb-3">APEX Trackday Log &middot; Praxisarbeit DBWE.TA1A.PA</footer>
+{{ bootstrap.load_js() }}
+</body>
+</html>

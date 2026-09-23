@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Ein unerwarteter Fehler ist aufgetreten</h1>
+<p>Der Vorgang wurde abgebrochen und die Datenbank in den vorherigen Zustand zurueckgesetzt.</p>
+<p><a href="{{ url_for('index') }}">Zurueck zur Startseite</a></p>
+{% endblock %}
