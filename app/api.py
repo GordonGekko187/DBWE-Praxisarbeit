@@ -28,6 +28,10 @@ token_auth = HTTPTokenAuth()
 
 
 # --- Fehlerantworten und Authentisierung ---------------------------------
+# Quelle: Grinberg (2024), Flask Mega-Tutorial, Kap. 23 (Application
+# Programming Interfaces). error_response, bad_request sowie die Handler fuer
+# HTTPBasicAuth und HTTPTokenAuth sind von dort uebernommen; angepasst ist nur,
+# dass alles in einem Modul liegt statt in einem Blueprint.
 def error_response(status_code, message=None):
     payload = {'error': HTTP_STATUS_CODES.get(status_code, 'Unknown error')}
     if message:

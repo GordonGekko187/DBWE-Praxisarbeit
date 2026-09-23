@@ -18,6 +18,8 @@ sudo apt update && sudo apt install -y python3-venv postgresql
 sudo -u postgres psql -c "CREATE DATABASE apex;"
 sudo -u postgres psql -c "CREATE USER apex WITH PASSWORD 'bitte-ersetzen';"
 sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE apex TO apex;"
+ # Ab PostgreSQL 15 zwingend: ohne dieses Recht schlaegt flask db upgrade fehl
+sudo -u postgres psql -d apex -c "GRANT ALL ON SCHEMA public TO apex;"
 
 # Applikation
 python3 -m venv .venv && source .venv/bin/activate
@@ -30,7 +32,7 @@ gunicorn -b 0.0.0.0:8000 --workers 3 apex:app
 
 Für den Dauerbetrieb läuft Gunicorn nicht im Terminal, sondern als
 systemd-Service mit `Restart=always`; optional steht ein Nginx als
-Reverse Proxy davor (Konfiguration siehe Loesungsdokument, Kapitel 7.5).
+Reverse Proxy davor (Konfiguration siehe Loesungsdokument, Kapitel 7.4).
 
 Applikation: `http://<host>:8000/`, Demokonto `demo` / `Trackday2026!`.
 
